@@ -8,8 +8,8 @@
 # move logs from json to mariadb [*]
 # pedophile slaughterhouse contribution [+]
 # log chat frequency data[+], most active users[+], message times [*] 
-# play music with 'alexa play __' command [x]
-# train language model [?]
+# play music with 'alexa play __' command [*]
+# train language model [x]
 
 import asyncio
 import discord
