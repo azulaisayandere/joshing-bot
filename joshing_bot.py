@@ -1,7 +1,7 @@
 # shoutouts to stackoverflow and charles from which i stole the basis for most of this code
 # REMOVE DIRECTORIES BEFORE DEPLOYING
 # CHANGE FLOOD CHANNEL ID AND COUNTER
-# objectives:
+# objectives: + done * in progress x not started
 # spam every nth message [+]
 # target specific users [+]
 # log user data [+]
