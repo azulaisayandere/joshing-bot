@@ -5,7 +5,7 @@
 # spam every nth message [+]
 # target specific users [+]
 # log user data [+]
-# move logs from json to mariadbv [*]
+# move logs from json to mariadb [*]
 # pedophile slaughterhouse contribution [+]
 # log chat frequency data[+], most active users[+], message times [*] 
 # play music with 'alexa play __' command [x]
