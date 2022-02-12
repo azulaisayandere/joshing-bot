@@ -19,7 +19,7 @@ import random
 import sys
 from datetime import datetime
 from discord import Forbidden, HTTPException
-from joshing_bot.config import STABLE_TOKEN
+from config import STABLE_TOKEN
 
 # print version
 print(f"[{datetime.now().strftime('%H:%M:%S')}] running version {sys.version}")
