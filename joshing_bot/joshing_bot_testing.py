@@ -1,83 +1,60 @@
-import aiomysql
+import aiomysql #unused atm
 import asyncio
 import discord
 import json
-import mariadb
+import mariadb # unused atm
+import os # unused atm
 import pandas as pd
+import nacl # unused atm
 import random
 import sys
 from datetime import datetime#, timezone
 from discord import Forbidden, HTTPException
-#from discord.ext import commands
+from discord.ext import commands
 from config import TEST_TOKEN
 
 # print version
 print(f"[{datetime.now().strftime('%H:%M:%S')}] running version {sys.version}")
 
 # Discord stuff
-client = discord.Client()
-#bot = commands.Bot(command_prefix="$")
+client = commands.Bot(command_prefix="josh ")
 
 # logging for analytics
 user_log = open("joshing_bot/test_log.json", "r")
 read_log = json.load(user_log)
 
-# time_log = open("joshing_bot/time_log.json", "r")
-# read_times = json.load(time_log)
-
-serverlist = read_log['servers']
-write_server = {"servers": serverlist}
-
 userlist = read_log['users']
 write_user = {"users": userlist}
 
-# timelist = read_times['times']
-# write_time = {"times": timelist}
-
 def log_data(message):
 
-    pass
-    # # server data
-    # foo = False
-    # for servers in serverlist:
-    #     if servers['guild'] == message.guild.id:
-    #         foo = True
-    #         server = servers
+    # user data
+    u = False
+    for users in userlist:
+        if users['name'] == f'{message.author}':
+            u = True
+            user = users
+        elif (users['uid'] == message.author.id) and (users['name'] != f'{message.author}'):
+            print("[{}] User {} has changed their tag to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), users['name'], message.author))
+            users['name'] = f'{message.author}'
+            u = True
+            user = users
 
+    if u == True: # update msg count
+        user['cnt'] += 1
 
-    # if foo == False:
-    #     serverlist.append({'server': [{f'{message.guild}'},],
-    #                         })
-
-
-
-    # # user data
-    # u = False
-    # for users in userlist:
-    #     if users['name'] == f'{message.author}':
-    #         u = True
-    #         user = users
-    #     elif (users['uid'] == message.author.id) and (users['name'] != f'{message.author}'):
-    #         print("[{}] User {} has changed their tag to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), users['name'], message.author))
-    #         users['name'] = f'{message.author}'
-    #         u = True
-    #         user = users
-
-    # if u == True: # update msg count
-    #     user['cnt'] += 1
-
-    # else: # log users
-    #     userlist.append({
-    #         'name': f'{message.author}',
-    #         'uid': message.author.id,
-    #         'dnm': 40,
-    #         'cnt': 1})
-    #     print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+    else: # log users
+        userlist.append({
+            'name': f'{message.author}',
+            'uid': message.author.id,
+            'dnm': 40,
+            'cnt': 1})
+        print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
 
     # write to files
-    # with open('joshing_bot/test_log.json', 'w') as userfile:
-    #     json.dump(write_user, userfile, indent=2)
-    # pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv('joshing_bot/test_log.csv')
+    with open('joshing_bot/test_log.json', 'w') as userfile:
+        json.dump(write_user, userfile, indent=2)
+    pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv('joshing_bot/test_log.csv')
 
 # pseudo-typing for character establishing
 async def type_wait(message):
@@ -91,7 +68,7 @@ async def type_wait(message):
 async def ps_spam():
     counter = 1
     while True:
-        channel = client.get_channel(849558317205422110) # slaughterhouse id 842573792747716618
+        channel = client.get_channel(939312650318405672) # slaughterhouse id 842573792747716618
         if counter == 1:
             await channel.send(file=discord.File(r'/home/kitten/Pictures/spam.png'))
             await channel.send('1 dead pedophile')
@@ -117,7 +94,7 @@ def josh(message):
 
 # automatically checks for targeted response conditions
 async def speak(message):
-    if message.guild.id == 845142029766754315: # test server id 845142029766754315 bad bois server id 579399140769923102
+    if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
         for users in userlist:
             if message.author.id == users['uid']:
                 dnm = users['dnm']
@@ -155,36 +132,31 @@ async def speak(message):
 
 # active Discord interaction
 
-# @bot.command()
-# async def ping(ctx):
-#     print('pong')
-#     await ctx.channel.send('pong')
+@client.command()
+async def ping(ctx, url):
+    await ctx.author.voice.channel.connect()
+    tchannel = client.get_channel(937380112771477567)
+    await tchannel.send(f"!play {url}")
+    await asyncio.sleep(1.5)
+    if discord.voice_client.VoiceClient.is_connected():
+        print(True)
+        #await discord.voice_client.VoiceClient.disconnect()
 
-# @bot.command()
+# @client.command()
 # async def test(ctx, arg1, arg2):
 #     await ctx.send('You passed {} and {}'.format(arg1, arg2))
-
-# @bot.command
-# async def play(ctx, url):
-#     voiceChannel = ctx.author.voice.channel
-#     voice = discord.utils.get(ctx.guild.voice_channels, name='General')
-#     if not voice.is_connected():
-#         await voiceChannel.connect()
-#         channel = client.get_channel(845142029766754318)
-#         channel.send(f"!play {url}")
-#         await asyncio.sleep(1.5)
-#         await voiceChannel.disconnect()
 
 @client.event
 async def on_ready():
     print(f"[{datetime.now().strftime('%H:%M:%S')}] fired up on {client.user}!")
     await ps_spam()
 
+@client.event
 async def on_message(message):
 
     if message.author != client.user:
 
-        if message.guild.id == 845142029766754315: # test server id 845142029766754315 bad bois server id 579399140769923102
+        if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
 
             log_data(message)
 
@@ -214,6 +186,6 @@ async def on_message(message):
             await asyncio.sleep(1)
             await message.channel.send("21")
 
-    # await bot.process_commands(message)
+    await client.process_commands(message)
 
 client.run(TEST_TOKEN)
