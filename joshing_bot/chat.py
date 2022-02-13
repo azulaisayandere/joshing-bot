@@ -3,6 +3,14 @@ import random
 from discord import Forbidden, HTTPException
 from logs import userlist
 
+# pseudo-typing for character establishing
+async def type_wait(message):
+    await message.channel.trigger_typing()
+    if len(message.content) >= 38:
+        await asyncio.sleep(2)
+    elif len(message.content) < 38:
+        await asyncio.sleep(1)
+
 # josh the message
 def josh(message):
     ret = ""
@@ -16,16 +24,9 @@ def josh(message):
             i = not i
     return ret
 
-# pseudo-typing for character establishing
-async def type_wait(message):
-    await message.channel.trigger_typing()
-    if len(message.content) >= 38:
-        await asyncio.sleep(2)
-    elif len(message.content) < 38:
-        await asyncio.sleep(1)
-
+# automatically checks for targeted response conditions
 async def speak(message):
-    if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
+    if message.guild.id == 579399140769923102: # test server id 845142029766754315 bad bois server id 579399140769923102
         for users in userlist:
             if message.author.id == users['uid']:
                 dnm = users['dnm']

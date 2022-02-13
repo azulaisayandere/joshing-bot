@@ -13,6 +13,8 @@
 
 import asyncio
 import discord
+import json
+import pandas as pd
 import sys
 from datetime import datetime
 from discord import Forbidden
@@ -25,6 +27,43 @@ print(f"[{datetime.now().strftime('%H:%M:%S')}] running version {sys.version}")
 
 # Discord stuff
 client = discord.Client()
+
+# logging for analytics
+user_log = open("user_log.json", "r")
+read_users = json.load(user_log)
+
+userlist = read_users['users']
+write_user = {"users": userlist}
+
+def log_data(message):
+
+    # user data
+    x = False
+    for users in userlist:
+        if users['name'] == f'{message.author}':
+            x = True
+            user = users
+        elif (users['uid'] == message.author.id) and (users['name'] != f'{message.author}'):
+            print("[{}] User {} has changed their tag to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), users['name'], message.author))
+            users['name'] = f'{message.author}'
+            x = True
+            user = users
+
+    if x == True: # update msg count
+        user['cnt'] += 1
+
+    else: # log users
+        userlist.append({
+            'name': f'{message.author}',
+            'uid': message.author.id,
+            'dnm': 40,
+            'cnt': 1})
+        print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+
+    # write to files
+    with open('user_log.json', 'w') as userfile:
+        json.dump(write_user, userfile, indent=2)
+    pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv('user_log.csv')
 
 # pedophile slaughterhouse flood
 async def ps_spam():
@@ -53,7 +92,7 @@ async def on_message(message):
 
     if message.author != client.user:
 
-        if message.guild.id == 579399140769923102: # test server id 845142029766754315 bad bois server id 579399140769923102
+        if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
 
             log_data(message)
 
