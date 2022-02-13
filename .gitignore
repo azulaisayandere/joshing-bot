@@ -1,3 +1,5 @@
 __pycache__/
 config.py
 test_log.json
+test_log.csv
+spam.png
