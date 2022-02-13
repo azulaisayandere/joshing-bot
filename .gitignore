@@ -8231,3 +8231,4 @@ joshing_bot/main/hooks/pre-receive.sample
 joshing_bot/main/hooks/prepare-commit-msg.sample
 joshing_bot/main/hooks/update.sample
 joshing_bot/main/info/exclude
+argv.json
