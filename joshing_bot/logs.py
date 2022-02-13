@@ -2,7 +2,7 @@
 import json
 import pandas as pd
 
-user_log = open("joshing_bot/test_log.json", "r")
+user_log = open("test_log.json", "r")
 read_log = json.load(user_log)
 
 userlist = read_log['users']
@@ -36,4 +36,4 @@ async def log_data(message):
     # write to files
     with open('joshing_bot/test_log.json', 'w') as userfile:
         json.dump(write_user, userfile, indent=2)
-    pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv('joshing_bot/test_log.csv')
+    pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv('test_log.csv')
