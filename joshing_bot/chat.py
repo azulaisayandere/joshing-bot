@@ -1,7 +1,25 @@
 import asyncio
+import discord
+import datetime
 import random
 from discord import Forbidden, HTTPException
+from joshing_bot import client
 from logs import userlist
+
+# pedophile slaughterhouse flood
+async def ps_spam():
+    counter = 1
+    while True:
+        channel = client.get_channel(939312650318405672) # slaughterhouse id 842573792747716618
+        if counter == 1:
+            await channel.send(file=discord.File(r'spam.png'))
+            await channel.send('1 dead pedophile')
+        else:
+            await channel.send(file=discord.File(r'spam.png'))
+            await channel.send(f'{counter} dead pedophiles')
+        counter += 1
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Another pedophile fucking died lol")
+        await asyncio.sleep(599)
 
 # pseudo-typing for character establishing
 async def type_wait(message):
