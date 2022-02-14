@@ -20,7 +20,6 @@ import sys
 from bot_commands import client
 from datetime import datetime
 from discord import Forbidden
-from discord.ext import commands
 from config import TEST_TOKEN
 from chat import speak
 from logs import log_data
