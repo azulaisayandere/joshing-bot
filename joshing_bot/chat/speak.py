@@ -1,33 +1,7 @@
-import asyncio
-import discord
-import datetime
-import random
 from discord import Forbidden, HTTPException
-from joshing_bot import client
-from logs import userlist
-
-# pedophile slaughterhouse flood
-async def ps_spam():
-    counter = 1
-    while True:
-        channel = client.get_channel(939312650318405672) # slaughterhouse id 842573792747716618
-        if counter == 1:
-            await channel.send(file=discord.File(r'spam.png'))
-            await channel.send('1 dead pedophile')
-        else:
-            await channel.send(file=discord.File(r'spam.png'))
-            await channel.send(f'{counter} dead pedophiles')
-        counter += 1
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Another pedophile fucking died lol")
-        await asyncio.sleep(599)
-
-# pseudo-typing for character establishing
-async def type_wait(message):
-    await message.channel.trigger_typing()
-    if len(message.content) >= 38:
-        await asyncio.sleep(2)
-    elif len(message.content) < 38:
-        await asyncio.sleep(1)
+from logs.logs import userlist
+import random
+from type_wait import type_wait
 
 # josh the message
 def josh(message):
@@ -44,7 +18,7 @@ def josh(message):
 
 # automatically checks for targeted response conditions
 async def speak(message):
-    if message.guild.id == 579399140769923102: # test server id 845142029766754315 bad bois server id 579399140769923102
+    if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
         for users in userlist:
             if message.author.id == users['uid']:
                 dnm = users['dnm']
