@@ -1,0 +1,16 @@
+__pycache__/bot_commands.cpython-37.pyc
+__pycache__/chat.cpython-37.pyc
+__pycache__/client.cpython-37.pyc
+__pycache__/config.cpython-37.pyc
+__pycache__/joshing_bot.cpython-37.pyc
+__pycache__/logs.cpython-37.pyc
+chat/__pycache__/__init__.cpython-37.pyc
+chat/__pycache__/chat.cpython-37.pyc
+chat/__pycache__/ps_spam.cpython-37.pyc
+chat/__pycache__/speak.cpython-37.pyc
+chat/__pycache__/type_wait.cpython-37.pyc
+logs/__pycache__/__init__.cpython-37.pyc
+logs/__pycache__/logs.cpython-37.pyc
+user_log.csv
+user_log.json
+spam.png
