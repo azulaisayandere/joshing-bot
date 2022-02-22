@@ -1,7 +1,7 @@
-import asyncio
-import random
 from discord import Forbidden, HTTPException
-from logs import userlist
+from logs.logs import userlist
+import random
+from chat import type_wait
 
 # josh the message
 def josh(message):
@@ -16,14 +16,7 @@ def josh(message):
             i = not i
     return ret
 
-# pseudo-typing for character establishing
-async def type_wait(message):
-    await message.channel.trigger_typing()
-    if len(message.content) >= 38:
-        await asyncio.sleep(2)
-    elif len(message.content) < 38:
-        await asyncio.sleep(1)
-
+# automatically checks for targeted response conditions
 async def speak(message):
     if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
         for users in userlist:
@@ -53,7 +46,7 @@ async def speak(message):
             try:
                 result = josh(message.content)
                 try:
-                    await type_wait(message)
+                    await type_wait.type_wait(message)
                     await message.channel.send(result)
                     print("[{}] Reply sent to {} in {}! Response Chance: {}%".format(message.created_at.strftime('%H:%M:%S'), message.author, message.guild.name, round((100 / dnm), 2)))
                 except HTTPException:

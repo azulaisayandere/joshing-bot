@@ -1,5 +1,7 @@
 __pycache__/
+main/
 config.py
-test_log.json
-test_log.csv
+user_log.json
+user_log.csv
 spam.png
+__init__.py
