@@ -14,3 +14,4 @@ logs/__pycache__/logs.cpython-37.pyc
 user_log.csv
 user_log.json
 spam.png
+config.py
