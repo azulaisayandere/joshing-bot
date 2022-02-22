@@ -1,0 +1,7 @@
+__pycache__/
+main/
+config.py
+user_log.json
+user_log.csv
+spam.png
+__init__.py
