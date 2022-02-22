@@ -1,7 +1,7 @@
 import asyncio
 import discord
-import datetime
-from joshing_bot import client
+from datetime import datetime
+from bot_cmds.bot_commands import client
 
 # pedophile slaughterhouse flood
 async def ps_spam():
