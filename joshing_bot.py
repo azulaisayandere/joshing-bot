@@ -1,4 +1,4 @@
-# shoutouts to stackoverflow and charles from which i stole the basis for most of this code
+# shoutouts to stackoverflow and charles from which i stole the basis for a lot of this code
 # CHANGE FLOOD CHANNEL ID AND COUNTER
 # objectives: + done * in progress x not started
 # spam every nth message [+]
