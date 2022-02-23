@@ -18,6 +18,7 @@ def josh(message):
 
 # automatically checks for targeted response conditions
 async def speak(message):
+    dnm = 0
     if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
         for users in userlist:
             if message.author.id == users['uid']:
