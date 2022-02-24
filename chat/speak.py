@@ -1,7 +1,7 @@
 from discord import Forbidden, HTTPException
 from logs.logs import userlist
 import random
-from chat import type_wait
+from chat.type_wait import type_wait
 
 # josh the message
 def josh(message):
@@ -47,7 +47,7 @@ async def speak(message):
             try:
                 result = josh(message.content)
                 try:
-                    await type_wait.type_wait(message)
+                    await type_wait(message)
                     await message.channel.send(result)
                     print("[{}] Reply sent to {} in {}! Response Chance: {}%".format(message.created_at.strftime('%H:%M:%S'), message.author, message.guild.name, round((100 / dnm), 2)))
                 except HTTPException:

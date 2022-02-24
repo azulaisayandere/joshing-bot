@@ -1,8 +1,7 @@
 import json
 import pandas as pd
 
-user_log = open("user_log.json", "r")
-read_log = json.load(user_log)
+read_log = json.load(open("user_log.json", "r"))
 
 userlist = read_log['users']
 write_user = {"users": userlist}
