@@ -23,7 +23,7 @@ async def rate(ctx, user, ndnm):
                 victim['dnm'] = int(ndnm)
                 await ctx.channel.trigger_typing()
                 await sleep(2)
-                await ctx.channel.send(f"Josh Stats for {victim['name']}, Message Count: {victim['cnt']}, Rate: 1/{victim['dnm']}")
+                await ctx.channel.send(f"Joshing rate for {victim['name']}: 1/{victim['dnm']}")
                 with open('user_log.json', 'w') as userfile:
                     dump(write_user, userfile, indent=2)
     else:
