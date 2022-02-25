@@ -17,7 +17,6 @@ from chat.speak import speak
 from config import TEST_TOKEN
 from datetime import datetime
 from discord import Forbidden
-from discord.ext.commands import errors
 from logs.logs import log_data
 from sys import version
 
@@ -47,22 +46,11 @@ async def on_message(message):
                 await message.channel.trigger_typing()
                 await sleep(1)
                 await message.channel.send("https://cdn.discordapp.com/emojis/697995591921172532.gif?")
-
-            elif (('josh' in message.content) and ('master' in message.content) and (('who') or ('whos') in message.content)):
-                await message.channel.send("kitty#8073 is my master")
-
-            elif ("9" in message.content) and ("+" in message.content) and ("10" in message.content):
-                        await message.channel.trigger_typing()
-                        await sleep(1)
-                        await message.channel.send("21")
             else:
                 await speak(message)
 
         except Forbidden:
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
-
-        except errors.CommandNotFound:
-            print(f"[{message.created_at.strftime('%H:%M:%S')}] Attempted to run command")
 
     await client.process_commands(message)
 
