@@ -1,7 +1,7 @@
+from asyncio import sleep
 from discord import Forbidden, HTTPException
 from logs.logs import userlist
 import random
-from chat.type_wait import type_wait
 
 # josh the message
 def josh(message):
@@ -16,9 +16,17 @@ def josh(message):
             i = not i
     return ret
 
+# pseudo-typing for character establishing
+async def type_wait(message):
+    await message.channel.trigger_typing()
+    if len(message.content) >= 38:
+        await sleep(3)
+    elif len(message.content) < 38:
+        await sleep(1.5)
+
 # automatically checks for targeted response conditions
 async def speak(message):
-    dnm = 0
+    dnm = 1
     if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
         for users in userlist:
             if message.author.id == users['uid']:
@@ -36,7 +44,7 @@ async def speak(message):
             try:
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (bot command)")
             except TypeError: # cant start message with '!'
-                print(f"[{message.created_at.strftime('%H:%M:%S')}] TypeError Encountered with invalid message (bot command)")
+                print(f"[{message.created_at.strftime('%H:%M:%S')}] TypeError encountered with invalid message (bot command)")
         elif (message.content.startswith('http')):
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (external link)")
         elif  (message.content.startswith('<@!')):

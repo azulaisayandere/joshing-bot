@@ -1,7 +1,7 @@
-import asyncio
-import discord
+from asyncio import sleep
 from datetime import datetime
 from bot_cmds.bot_commands import client
+import discord
 
 # pedophile slaughterhouse flood
 async def ps_spam():
@@ -16,4 +16,4 @@ async def ps_spam():
             await channel.send(f'{counter} dead pedophiles')
         counter += 1
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Another pedophile fucking died lol")
-        await asyncio.sleep(599)
+        await sleep(599)
