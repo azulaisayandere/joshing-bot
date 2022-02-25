@@ -7,7 +7,7 @@
 # move logs from json to mariadb [x]
 # pedophile slaughterhouse contribution [+]
 # log frequency data[+], most active users[+], message times [*] 
-# play music with 'alexa play __' command [*]
+# play music with 'josh play __' command [*]
 # train language model [x]
 
 from bot_cmds.bot_commands import client
@@ -18,10 +18,10 @@ from config import TEST_TOKEN
 from datetime import datetime
 from discord import Forbidden
 from logs.logs import log_data
-import sys
+from sys import version
 
 # print version
-print(f"[{datetime.now().strftime('%H:%M:%S')}] running version {sys.version}")
+print(f"[{datetime.now().strftime('%H:%M:%S')}] running Python {version}")
 
 # other Discord interactions and funnies
 @client.event
