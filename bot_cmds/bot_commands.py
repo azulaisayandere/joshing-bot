@@ -37,9 +37,9 @@ async def rate(ctx, user, ndnm):
                 if user == victim['name']:
                     victim['dnm'] = int(ndnm)
                     await typing(ctx, 2)
-                    await ctx.channel.send(f"Joshing rate for {victim['name']}: 1/{victim['dnm']}")
                     with open('user_log.json', 'w') as userfile:
                         dump(write_user, userfile, indent=2)
+                    await ctx.channel.send(f"Joshing rate for {victim['name']}: 1/{victim['dnm']}")
         else:
             await typing(ctx, 1)
             await ctx.channel.send("you're not my master fuck off")
@@ -48,4 +48,15 @@ async def rate(ctx, user, ndnm):
 
 @client.command()
 async def play(ctx, url):
-    pass
+    await ctx.author.voice.channel.connect()
+    await client.get_channel(939312650318405672).send(f";;play {url}") # bot channel id 579400721640849450
+    await sleep(3)
+    await ctx.voice_client.disconnect()
+
+@client.command()
+async def boom(ctx):
+    await client.get_channel(937380112771477568).connect() # main vc id 652287494716653598
+    await client.get_channel(939312650318405672).send(f";;play https://www.youtube.com/watch?v=YkGisvljnaI") # bot channel id 579400721640849450
+    await sleep(3)
+    await ctx.voice_client.disconnect()
+
