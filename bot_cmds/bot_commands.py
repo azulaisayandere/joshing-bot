@@ -45,18 +45,3 @@ async def rate(ctx, user, ndnm):
             await ctx.channel.send("you're not my master fuck off")
     except Forbidden:
         print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
-
-@client.command()
-async def play(ctx, url):
-    await ctx.author.voice.channel.connect()
-    await client.get_channel(939312650318405672).send(f";;p {url}") # bot channel id 579400721640849450
-    await sleep(30)
-    await ctx.voice_client.disconnect()
-
-@client.command()
-async def boom(ctx):
-    await client.get_channel(937380112771477568).connect() # main vc id 652287494716653598
-    await client.get_channel(939312650318405672).send(f";;p https://www.youtube.com/watch?v=YkGisvljnaI") # bot channel id 579400721640849450
-    await sleep(30)
-    await ctx.voice_client.disconnect()
-
