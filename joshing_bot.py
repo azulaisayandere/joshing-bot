@@ -1,18 +1,15 @@
 # shoutouts to stackoverflow and charles from which i stole the basis for a lot of this code
-# CHANGE FLOOD CHANNEL ID AND COUNTER
 # objectives: + done * in progress x not started
 # spam every nth message [+]
 # target specific users [+]
 # log user data [+]
 # move logs from json to mariadb [x]
-# pedophile slaughterhouse contribution [+]
+# pedophile slaughterhouse contribution [+] now removed 37,846 kid diddlers dead :)
 # log frequency data[+], most active users[+], message times [*] 
-# play music with 'josh play __' command [*]
 # train language model [x]
 
 from asyncio import sleep
 from bot_cmds.bot_commands import client
-from chat.ps_spam import ps_spam
 from chat.speak import speak
 from config import TEST_TOKEN
 from datetime import datetime
@@ -27,7 +24,6 @@ print(f"[{datetime.now().strftime('%H:%M:%S')}] running Python {version}")
 @client.event
 async def on_ready():
     print(f"[{datetime.now().strftime('%H:%M:%S')}] fired up on {client.user}!")
-    await ps_spam()
 
 @client.event
 async def on_message(message):
