@@ -40,18 +40,13 @@ async def speak(message):
     x = random.randint(1, dnm)
 
     if (len(message.content) <= 75) and (x == 1):
-        if (message.content.startswith('-')) or (message.content.startswith('!')):
+        if (message.content.startswith('-')) or (message.content.startswith('!')) or (message.content.startswith(';;')):
             try:
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (bot command)")
             except TypeError: # cant start message with '!'
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] TypeError encountered with invalid message (bot command)")
-        elif (message.content.startswith('http')):
-            print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (external link)")
-        elif  (message.content.startswith('<@!')):
-            print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (tagged user)")
-        elif (message.content.startswith('<A:')):
-            print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (Nitro emoji)")
-        else:
+        elif (message.content.startswith('http')) or (message.content.startswith('<@!')) or (message.content.startswith('<A:')):
+            print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received")
             try:
                 result = josh(message.content)
                 try:

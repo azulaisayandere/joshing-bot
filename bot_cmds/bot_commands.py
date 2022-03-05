@@ -23,7 +23,7 @@ async def stats(ctx, name):
                     await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: 1/{user['dnm']}")
         else:
             for user in userlist:
-                if name == user['name']:
+                if (name == user['name']) or (name == f"<@!{user['uid']}>"):
                     await typing(ctx, 2)
                     await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: 1/{user['dnm']}")
     except Forbidden:
@@ -45,3 +45,5 @@ async def rate(ctx, user, ndnm):
             await ctx.channel.send("you're not my master fuck off")
     except Forbidden:
         print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+    except commands.errors.MissingRequiredArgument:
+        print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Missing argument")
