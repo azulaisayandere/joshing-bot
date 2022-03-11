@@ -1,7 +1,7 @@
 from asyncio import sleep
 from discord import Forbidden, HTTPException
 from logs.logs import userlist
-import random
+from random import randint
 
 # josh the message
 def josh(message):
@@ -37,7 +37,7 @@ async def speak(message):
         else:
             dnm = 40
 
-    x = random.randint(1, dnm)
+    x = randint(1, dnm)
 
     if (len(message.content) <= 75) and (x == 1):
         if (message.content.startswith('-')) or (message.content.startswith('!')) or (message.content.startswith(';;')):
