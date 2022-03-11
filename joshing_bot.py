@@ -27,15 +27,10 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-
     if message.author != client.user:
-
         if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
-
             await log_data(message)
-
         print(f"[{message.created_at.strftime('%H:%M:%S')}] Message received from {message.author} in {message.guild.name}")
-
         try:
             if message.content == ':v':
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] quack :v")
@@ -44,10 +39,8 @@ async def on_message(message):
                 await message.channel.send("https://cdn.discordapp.com/emojis/697995591921172532.gif?")
             else:
                 await speak(message)
-
         except Forbidden:
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
-
     await client.process_commands(message)
 
 client.run(TEST_TOKEN)
