@@ -34,7 +34,7 @@ async def rate(ctx, user, ndnm):
     try:
         if ctx.author.id == 204366690446737419:
             for victim in userlist:
-                if (user == victim['name']) or (user == f"<@!{victim['uid']}>"):
+                if (user == victim['name']) or (user == f"<@{victim['uid']}>"):
                     victim['dnm'] = int(ndnm)
                     await typing(ctx, 2)
                     with open('user_log.json', 'w') as userfile:

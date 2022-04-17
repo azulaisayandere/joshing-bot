@@ -45,8 +45,9 @@ async def speak(message):
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received (bot command)")
             except TypeError: # cant start message with '!'
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] TypeError encountered with invalid message (bot command)")
-        elif (message.content.startswith('http')) or (message.content.startswith('<@!')) or (message.content.startswith('<A:')):
+        elif (message.content.startswith('http')) or (message.content.startswith('<@')) or (message.content.startswith('<A:')):
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received")
+        else:
             try:
                 result = josh(message.content)
                 try:
