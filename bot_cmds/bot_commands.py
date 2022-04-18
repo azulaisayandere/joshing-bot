@@ -16,7 +16,7 @@ async def typing(ctx, x):
 @client.command()
 async def man(ctx):
     await typing(ctx, 2)
-    await ctx.channel.send("usage: josh ___ \ncmds:\n stats- displays stats logged internally (WIP)\nrate- modifies response rate (WIP)\nman- sends this manual")
+    await ctx.channel.send("usage: josh ___ \ncmds:\n stats- displays stats logged internally (WIP) e.g. josh stats (discord tag)\nrate- modifies response rate (WIP)\nman- sends this manual")
 
 @client.command()
 async def stats(ctx, name):
@@ -28,7 +28,7 @@ async def stats(ctx, name):
                     await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: {round((100/user['dnm']), 1)}%")
         else:
             for user in userlist:
-                if (name == user['name']) or (name == f"<@!{user['uid']}>"):
+                if (name == user['name']) or (name == f"<@{user['uid']}>"):
                     await typing(ctx, 2)
                     await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: {round((100/user['dnm']), 1)}%")
     except Forbidden:
