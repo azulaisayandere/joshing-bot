@@ -14,6 +14,11 @@ async def typing(ctx, x):
 
 # Discord commands
 @client.command()
+async def man(ctx):
+    await typing(ctx, 2)
+    await ctx.channel.send("usage: josh ___ \ncmds:\n stats- displays stats logged internally (WIP)\nrate- modifies response rate (WIP)\nman- sends this manual")
+
+@client.command()
 async def stats(ctx, name):
     try:
         if name == "me":
