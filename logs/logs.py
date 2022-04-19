@@ -1,37 +1,61 @@
 import json
-import pandas as pd
 
 read_log = json.load(open("user_log.json", "r"))
 
-userlist = read_log['users']
-write_user = {"users": userlist}
+masslist = read_log['guilds']
+write = {"guilds": masslist}
 
 async def log_data(message):
 
-    # user data
-    u = False
-    for users in userlist:
-        if users['name'] == f'{message.author}':
-            u = True
-            user = users
-        elif (users['uid'] == message.author.id) and (users['name'] != f'{message.author}'):
-            print("[{}] User {} has changed their tag to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), users['name'], message.author))
-            users['name'] = f'{message.author}'
-            u = True
-            user = users
+    #guild data
+    g = False
+    for guilds in masslist:
+        if guilds['guid'] == message.guild.id:
+            userlist = guilds['users']
+            g = True
+        elif guilds['name'] == message.guild:
+            guilds['name'] == f'{message.guild}'
+            print("[{}] {} has changed their guild name to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), guilds['name'], message.guild))
+            g = True
+        else:
+            pass
 
-    if u == True: # update msg count
-        user['cnt'] += 1
+    if g == True: # user data
+        u = False
+        for users in userlist:
+            if users['name'] == f'{message.author}':
+                u = True
+                user = users
+            elif (users['uid'] == message.author.id) and (users['name'] != f'{message.author}'):
+                print("[{}] User {} has changed their tag to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), users['name'], message.author))
+                users['name'] = f'{message.author}'
+                u = True
+                user = users
 
-    else: # log users
-        userlist.append({
-            'name': f'{message.author}',
-            'uid': message.author.id,
-            'dnm': 40,
-            'cnt': 1})
-        print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+        if u == True: # update msg count
+            user['cnt'] += 1
+
+        else: # log users
+            userlist.append({
+                'name': f'{message.author}',
+                'uid': message.author.id,
+                'dnm': 40,
+                'cnt': 1})
+            print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+    else:
+        masslist.append({
+            "name": f'{message.guild}', "guid": int(f'{message.guild.id}'), 'users': []})
+        for guilds in masslist:
+            if guilds['guid'] == message.guild.id:
+                guilds['users'].append({
+                        'name': f'{message.author}',
+                        'uid': message.author.id,
+                        'dnm': 40,
+                        'cnt': 1})
+                print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+            else:
+                pass
 
     # write to files
     with open('user_log.json', 'w') as userfile:
-        json.dump(write_user, userfile, indent=2)
-    pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv('user_log.csv')
+        json.dump(write, userfile, indent=2)

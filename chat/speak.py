@@ -1,6 +1,6 @@
 from asyncio import sleep
 from discord import Forbidden, HTTPException
-from logs.logs import userlist
+from logs.logs import masslist
 from random import randint
 
 # josh the message
@@ -26,16 +26,11 @@ async def type_wait(message):
 
 # automatically checks for targeted response conditions
 async def speak(message):
-    dnm = 1
-    if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
-        for users in userlist:
-            if message.author.id == users['uid']:
-                dnm = users['dnm']
-    else:
-        if message.author.id == 204366690446737419: # blacklist self outside bad bois
-            dnm = 200
-        else:
-            dnm = 40
+    for guilds in masslist:
+        if guilds['guid'] == message.guild.id:
+            for users in guilds['users']:
+                if users['uid'] == message.author.id:
+                    dnm = users['dnm']
 
     x = randint(1, dnm)
 
