@@ -41,7 +41,7 @@ async def log_data(message):
                 'uid': message.author.id,
                 'dnm': 40,
                 'cnt': 1})
-            print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+            print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user in {message.guild}! {message.author}")
     else:
         masslist.append({
             "name": f'{message.guild}', "guid": int(f'{message.guild.id}'), 'users': []})
@@ -52,7 +52,7 @@ async def log_data(message):
                         'uid': message.author.id,
                         'dnm': 40,
                         'cnt': 1})
-                print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user! {message.author}")
+                print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user in {message.guild}! {message.author}")
             else:
                 pass
 
