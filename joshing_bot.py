@@ -28,8 +28,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author != client.user:
-        if message.guild.id == 937380112771477564: # test server id 937380112771477564 bad bois server id 579399140769923102
-            await log_data(message)
+        await log_data(message)
         print(f"[{message.created_at.strftime('%H:%M:%S')}] Message received from {message.author} in {message.guild.name}")
         try:
             if message.content == ':v':
