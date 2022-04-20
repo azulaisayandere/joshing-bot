@@ -48,10 +48,9 @@ async def stats(ctx, name):
                             await typing(ctx, 2)
                             await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: {round((100/user['dnm']), 1)}%")
                     else:
-                        for user in masslist:
-                            if (name == user['name']) or (name == f"<@{user['uid']}>"):
-                                await typing(ctx, 2)
-                                await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: {round((100/user['dnm']), 1)}%")
+                        if (name == user['name']) or (name == f"<@{user['uid']}>"):
+                            await typing(ctx, 2)
+                            await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: {round((100/user['dnm']), 1)}%")
                 except Forbidden:
                     print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
 
