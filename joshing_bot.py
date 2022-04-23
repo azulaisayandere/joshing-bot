@@ -11,7 +11,7 @@
 from asyncio import sleep
 from bot_cmds.bot_commands import client
 from chat.speak import speak
-from config import TEST_TOKEN as TOKEN
+from config import TOKEN
 from datetime import datetime
 from discord import Forbidden
 from logs.logs import log_data
