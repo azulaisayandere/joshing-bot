@@ -41,7 +41,7 @@ async def log_data(message):
                 'uid': message.author.id,
                 'dnm': 40,
                 'cnt': 1})
-            print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user in {message.guild}! {message.author}")
+            print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user, {message.author}, in {message.guild}! ")
     else:
         masslist.append({
             "name": f'{message.guild}', "guid": int(f'{message.guild.id}'), 'users': []})
@@ -57,5 +57,5 @@ async def log_data(message):
                 pass
 
     # write to files
-    with open('user_log.json', 'w') as userfile:
-        json.dump(write, userfile, indent=2)
+    with open('user_log.json', 'w') as file:
+        json.dump(write, file, indent=2)

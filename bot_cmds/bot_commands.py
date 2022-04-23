@@ -4,7 +4,7 @@ from discord import Forbidden, File
 from discord.ext import commands
 from json import dump
 from logs.logs import masslist, write
-import pandas as pd
+from pandas import DataFrame
 
 # Establish client user
 client = commands.Bot(command_prefix="josh ")
@@ -21,21 +21,24 @@ async def export(ctx):
         for guilds in masslist:
             if guilds['guid'] == ctx.guild.id:
                 userlist = guilds['users']
-                pd.DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv(f'{ctx.guild.id}_log.csv') # export by server via command
+                DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv(f'{ctx.guild.id}_log.csv') # export by server via command
                 await typing(ctx, 3)
                 await ctx.send(file=File(f'{ctx.guild.id}_log.csv'))
                 print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported .csv for {ctx.guild}!")
     else:
-        await typing(ctx, 1)
-        await ctx.channel.send("you're not my master fuck off")
+        try:
+            await typing(ctx, 1)
+            await ctx.channel.send("you're not my master fuck off")
+        except Forbidden:
+            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
 
 @client.command()
 async def man(ctx):
-        try:
-            await typing(ctx, 2)
-            await ctx.channel.send("usage: josh ___ \ncommands:\nstats- displays stats logged internally (WIP) e.g. josh stats <discord tag>\nrate- modifies response rate (WIP) e.g. josh rate <discord tag>\nman- sends this manual")
-        except Forbidden:
-            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+    try:
+        await typing(ctx, 2)
+        await ctx.channel.send("usage: josh ___ \ncommands:\nstats- displays internally logged stats (WIP) e.g. josh stats <discord tag>\nrate- modifies response rate (WIP) e.g. josh rate <discord tag>\nexport- sends a .csv of the data logged for this server\n\nman- sends this manual")
+    except Forbidden:
+        print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
 
 @client.command()
 async def stats(ctx, name):
@@ -59,18 +62,33 @@ async def rate(ctx, user, ndnm):
     if ctx.author.id == 204366690446737419:
         for guilds in masslist:
             if guilds['guid'] == ctx.guild.id:
-                for victim in guilds['users']:
+                if user == "everyone":
+                    for users in guilds['users']:
+                        if users['uid'] != 204366690446737419:
+                            users['dnm'] = int(ndnm)
+                    with open('user_log.json', 'w') as userfile:
+                        dump(write, userfile, indent=2)
                     try:
-                        if (user == victim['name']) or (user == f"<@{victim['uid']}>"):
-                            victim['dnm'] = int(ndnm)
-                            await typing(ctx, 2)
-                            with open('user_log.json', 'w') as userfile:
-                                dump(write, userfile, indent=2)
-                            await ctx.channel.send(f"Joshing rate for {victim['name']}: {round((100/victim['dnm']), 1)}%")
+                        await ctx.channel.send(f"Joshing rate for everyone: {round((100/int(ndnm)), 1)}%")
                     except Forbidden:
                         print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
-                    except commands.errors.MissingRequiredArgument:
-                        print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Missing argument")
+
+                else:
+                    for victim in guilds['users']:
+                        try:
+                            if (user == victim['name']) or (user == f"<@{victim['uid']}>"):
+                                victim['dnm'] = int(ndnm)
+                                await typing(ctx, 2)
+                                with open('user_log.json', 'w') as file:
+                                    dump(write, file, indent=2)
+                                await ctx.channel.send(f"Joshing rate for {victim['name']}: {round((100/victim['dnm']), 1)}%")
+                            else:
+                                pass
+                            await ctx.channel.send(f"Joshing rate for everyone: {round((100/victim['dnm']), 1)}%")
+                        except Forbidden:
+                            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+                        except commands.errors.MissingRequiredArgument:
+                            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Missing argument")
     else:
         await typing(ctx, 1)
         await ctx.channel.send("you're not my master fuck off")
