@@ -69,6 +69,7 @@ async def rate(ctx, user, ndnm):
                     with open('user_log.json', 'w') as userfile:
                         dump(write, userfile, indent=2)
                     try:
+                        await typing(ctx, 2)
                         await ctx.channel.send(f"Joshing rate for everyone: {round((100/int(ndnm)), 1)}%")
                     except Forbidden:
                         print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
@@ -78,9 +79,9 @@ async def rate(ctx, user, ndnm):
                         try:
                             if (user == victim['name']) or (user == f"<@{victim['uid']}>"):
                                 victim['dnm'] = int(ndnm)
-                                await typing(ctx, 2)
                                 with open('user_log.json', 'w') as file:
                                     dump(write, file, indent=2)
+                                await typing(ctx, 2)
                                 await ctx.channel.send(f"Joshing rate for {victim['name']}: {round((100/victim['dnm']), 1)}%")
                             else:
                                 pass
