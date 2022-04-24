@@ -21,7 +21,7 @@ async def export(ctx):
         for guilds in masslist:
             if guilds['guid'] == ctx.guild.id:
                 userlist = guilds['users']
-                DataFrame(userlist, columns=['name', 'uid', 'dnm', 'cnt']).to_csv(f'{ctx.guild.id}_log.csv') # export by server via command
+                DataFrame(userlist, columns=['name', 'cnt']).to_csv(f'{ctx.guild.id}_log.csv') # export by server via command
                 await typing(ctx, 3)
                 await ctx.send(file=File(f'{ctx.guild.id}_log.csv'))
                 print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported .csv for {ctx.guild}!")
@@ -91,5 +91,6 @@ async def rate(ctx, user, ndnm):
 # @client.event
 # async def on_command_error(ctx, error):
 #     print(f'repr: {repr(error)} raw: {error}')
+#     print(commands.errors.MissingRequiredArgument)
 #     # except commands.errors.MissingRequiredArgument:
 #     #     print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Missing argument")
