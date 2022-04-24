@@ -7,7 +7,7 @@ write = {"guilds": masslist}
 
 async def log_data(message):
 
-    #guild data
+    # guild data
     g = False
     for guilds in masslist:
         if guilds['guid'] == message.guild.id:
@@ -16,6 +16,7 @@ async def log_data(message):
         elif guilds['name'] == message.guild:
             guilds['name'] == f'{message.guild}'
             print("[{}] {} has changed their guild name to {}, updating entry in file.".format(message.created_at.strftime('%H:%M:%S'), guilds['name'], message.guild))
+            userlist = guilds['users']
             g = True
         else:
             pass
@@ -44,7 +45,7 @@ async def log_data(message):
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Logged new user, {message.author}, in {message.guild}! ")
     else:
         masslist.append({
-            "name": f'{message.guild}', "guid": int(f'{message.guild.id}'), 'users': []})
+            'name': f'{message.guild}', 'guid': int(f'{message.guild.id}'), 'users': []})
         for guilds in masslist:
             if guilds['guid'] == message.guild.id:
                 guilds['users'].append({
