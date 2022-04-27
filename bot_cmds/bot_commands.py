@@ -88,9 +88,12 @@ async def rate(ctx, user, ndnm):
         await typing(ctx, 1)
         await ctx.channel.send("you're not my master fuck off")
 
-# @client.event
-# async def on_command_error(ctx, error):
-#     print(f'repr: {repr(error)} raw: {error}')
-#     print(commands.errors.MissingRequiredArgument)
-#     # except commands.errors.MissingRequiredArgument:
-#     #     print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Missing argument")
+@client.event
+async def on_command_error(ctx, error):
+    if repr(error).startswith("MissingRequiredArgument"):
+        try:
+            await typing(ctx, 2)
+            await ctx.channel.send("Missing argument(s)")
+        except Forbidden:
+            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+    
