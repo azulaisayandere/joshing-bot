@@ -3,7 +3,7 @@
 # spam every nth message [+]
 # target specific users [+]
 # log user data [+]
-# log frequency data[+], most active users[+], message times [*] 
+# log frequency data[+], most active users[+], message times [+] 
 # move logs from json to mariadb [x]
 # pedophile slaughterhouse contribution [+] now removed, 37,846 kid diddlers dead :)
 # train language model [x]
@@ -23,7 +23,7 @@ print(f"[{datetime.now().strftime('%H:%M:%S')}] running Python {version}")
 # other Discord interactions and funnies
 @client.event
 async def on_ready():
-    await client.change_presence(activity=Game(name="the being evil game >:)"))
+    await client.change_presence(activity=Game(name="the joshing game >:)"))
     print(f"[{datetime.now().strftime('%H:%M:%S')}] fired up on {client.user}!")
 
 @client.event
