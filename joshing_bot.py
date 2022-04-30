@@ -30,7 +30,6 @@ async def on_ready():
 async def on_message(message):
     if message.author != client.user:
         await log_data(message)
-        print(f"[{message.created_at.strftime('%H:%M:%S')}] Message received from {message.author} in {message.guild.name}")
         try:
             if message.content == ':v':
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] quack :v")
