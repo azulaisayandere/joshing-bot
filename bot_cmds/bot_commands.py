@@ -16,15 +16,23 @@ async def typing(ctx, x):
 
 # Discord commands
 @client.command()
-async def export(ctx):
+async def export(ctx, logtype):
     if ctx.author.id == 204366690446737419:
         for guilds in masslist:
             if guilds['guid'] == ctx.guild.id:
-                userlist = guilds['users']
-                DataFrame(userlist, columns=['name', 'cnt']).to_csv(f'{ctx.guild.id}_log.csv') # export by server via command
-                await typing(ctx, 3)
-                await ctx.send(file=File(f'{ctx.guild.id}_log.csv'))
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported .csv for {ctx.guild}!")
+                if logtype == 'user':
+                    DataFrame(guilds['users'], columns=['name', 'cnt']).to_csv(f'{ctx.guild.id}_user_log.csv') # export by server via command
+                    await typing(ctx, 3)
+                    await ctx.send(file=File(f'{ctx.guild.id}_user_log.csv'))
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported message count log for {ctx.guild}!")
+                elif logtype == 'time':
+                    DataFrame(guilds['time']).to_csv(f'{ctx.guild.id}_time_log.csv')
+                    await typing(ctx, 3)
+                    await ctx.send(file=File(f'{ctx.guild.id}_time_log.csv'))
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported time log for {ctx.guild}!")
+                else:
+                    await typing(ctx, 2)
+                    await ctx.channel.send('invalid argument')
     else:
         try:
             await typing(ctx, 1)
@@ -96,4 +104,3 @@ async def on_command_error(ctx, error):
             await ctx.channel.send("Missing argument(s)")
         except Forbidden:
             print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
-    
