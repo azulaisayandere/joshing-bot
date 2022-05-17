@@ -21,12 +21,14 @@ async def export(ctx, logtype):
         for guilds in masslist:
             if guilds['guid'] == ctx.guild.id:
                 if logtype == 'user':
-                    DataFrame(guilds['users'], columns=['name', 'cnt']).to_csv(f'{ctx.guild.id}_user_log.csv') # export by server via command
+                    df = DataFrame(guilds['users'], columns=['name', 'cnt'])
+                    df.to_csv(f'{ctx.guild.id}_user_log.csv') # export by server via command
                     await typing(ctx, 3)
                     await ctx.send(file=File(f'{ctx.guild.id}_user_log.csv'))
                     print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported message count log for {ctx.guild}!")
                 elif logtype == 'time':
-                    DataFrame(guilds['time']).to_csv(f'{ctx.guild.id}_time_log.csv')
+                    df = DataFrame(guilds['time'], columns=['time'])
+                    df.to_csv(f'{ctx.guild.id}_time_log.csv')
                     await typing(ctx, 3)
                     await ctx.send(file=File(f'{ctx.guild.id}_time_log.csv'))
                     print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported time log for {ctx.guild}!")
