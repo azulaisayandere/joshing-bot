@@ -44,7 +44,7 @@ async def speak(message):
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Invalid message received")
         else:
             try:
-                result = josh(message.content)
+                result = josh(message.content) 
                 try:
                     await type_wait(message)
                     await message.channel.send(result)

@@ -87,13 +87,13 @@ async def rate(ctx, user, ndnm):
                     for victim in guilds['users']:
                         if (user == victim['name']) or (user == f"<@{victim['uid']}>"):
                             victim['dnm'] = int(ndnm)
-                    with open('user_log.json', 'w') as file:
-                        dump(write, file, indent=2)
-                    try:
-                        await typing(ctx, 2)
-                        await ctx.channel.send(f"Joshing rate for {victim['name']}: {round((100/victim['dnm']), 1)}%")
-                    except Forbidden:
-                        print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+                            with open('user_log.json', 'w') as file:
+                                dump(write, file, indent=2)
+                            try:
+                                await typing(ctx, 2)
+                                await ctx.channel.send(f"Joshing rate for {victim['name']}: {round((100/victim['dnm']), 1)}%")
+                            except Forbidden:
+                                print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
     else:
         await typing(ctx, 1)
         await ctx.channel.send("you're not my master fuck off")
