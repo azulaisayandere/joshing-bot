@@ -11,7 +11,7 @@
 from asyncio import sleep
 from bot_cmds.bot_commands import client
 from chat.speak import speak
-from config import TOKEN
+from config import JOSH
 from datetime import datetime
 from discord import Forbidden, Game
 from logs.logs import log_data
@@ -42,4 +42,4 @@ async def on_message(message):
             print(f"[{message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
     await client.process_commands(message)
 
-client.run(TOKEN)
+client.run(JOSH)
