@@ -12,7 +12,7 @@ client = commands.Bot(command_prefix="josh ", intents=intents)
 
 # i hate rewriting this every time
 async def typing(ctx, x):
-    await ctx.channel.trigger_typing()
+    await ctx.channel.typing()
     await sleep(x)
 
 # Discord commands
@@ -25,7 +25,7 @@ async def export(ctx, logtype):
                     df = DataFrame(guilds['users'], columns=['name', 'cnt'])
                     df.to_csv(f'{ctx.guild.id}_user_log.csv') # export by server via command
                     await typing(ctx, 3)
-                    await ctx.send(file=File(f'{ctx.guild.id}_user_log.csv'))
+                    await ctx.channel.send(file=File(f'{ctx.guild.id}_user_log.csv'))
                     print(f"[{datetime.now().strftime('%H:%M:%S')}] Exported message count log for {ctx.guild}!")
                 elif logtype == 'time':
                     df = DataFrame(guilds['time'], columns=['time'])
@@ -41,15 +41,16 @@ async def export(ctx, logtype):
             await typing(ctx, 1)
             await ctx.channel.send("you're not my master fuck off")
         except Forbidden:
-            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+            print(f"[{ctx.ctx.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
 
-@client.command()
-async def man(ctx):
-    try:
-        await typing(ctx, 2)
-        await ctx.channel.send("usage: josh ___ \ncommands:\nstats- displays internally logged stats (WIP) e.g. josh stats <discord tag>\nrate- modifies response rate (WIP) e.g. josh rate <discord tag>\nexport- sends a .csv of the data logged for this server\n\nman- sends this manual")
-    except Forbidden:
-        print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+# did not know help command exists :P
+# @client.command()
+# async def man(ctx):
+#     try:
+#         await typing(ctx, 2)
+#         await ctx.channel.send("usage: josh ___ \ncommands:\nstats- displays internally logged stats (WIP) e.g. josh stats <discord tag>\nrate- modifies response rate (WIP) e.g. josh rate <discord tag>\nexport- sends a .csv of the data logged for this server\n\nman- sends this manual")
+#     except Forbidden:
+#         print(f"[{ctx.ctx.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
 
 @client.command()
 async def stats(ctx, name):
@@ -66,7 +67,7 @@ async def stats(ctx, name):
                             await typing(ctx, 2)
                             await ctx.channel.send(f"Josh Stats for {user['name']}, Message Count: {user['cnt']}, Rate: {round((100/user['dnm']), 1)}%")
             except Forbidden:
-                print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+                print(f"[{ctx.ctx.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
 
 @client.command()
 async def rate(ctx, user, ndnm):
@@ -83,7 +84,7 @@ async def rate(ctx, user, ndnm):
                         await typing(ctx, 2)
                         await ctx.channel.send(f"Joshing rate for everyone: {round((100/int(ndnm)), 1)}%")
                     except Forbidden:
-                        print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+                        print(f"[{ctx.ctx.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
                 else:
                     for victim in guilds['users']:
                         if (user == victim['name']) or (user == f"<@{victim['uid']}>"):
@@ -94,7 +95,7 @@ async def rate(ctx, user, ndnm):
                                 await typing(ctx, 2)
                                 await ctx.channel.send(f"Joshing rate for {victim['name']}: {round((100/victim['dnm']), 1)}%")
                             except Forbidden:
-                                print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+                                print(f"[{ctx.ctx.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
     else:
         await typing(ctx, 1)
         await ctx.channel.send("you're not my master fuck off")
@@ -106,4 +107,4 @@ async def on_command_error(ctx, error):
             await typing(ctx, 2)
             await ctx.channel.send("Missing argument(s)")
         except Forbidden:
-            print(f"[{ctx.message.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")
+            print(f"[{ctx.ctx.created_at.strftime('%H:%M:%S')}] Forbidden 403 Encountered")

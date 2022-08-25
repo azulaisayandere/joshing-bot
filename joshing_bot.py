@@ -33,7 +33,7 @@ async def on_message(message):
         try:
             if message.content == ':v':
                 print(f"[{message.created_at.strftime('%H:%M:%S')}] quack :v")
-                await message.channel.trigger_typing()
+                await message.channel.typing()
                 await sleep(1)
                 await message.channel.send("https://cdn.discordapp.com/emojis/697995591921172532.gif?")
             else:

@@ -18,7 +18,7 @@ def josh(message):
 
 # pseudo-typing for character establishing
 async def type_wait(message):
-    await message.channel.trigger_typing()
+    await message.channel.typing()
     if len(message.content) >= 38:
         await sleep(3)
     elif len(message.content) < 38:
