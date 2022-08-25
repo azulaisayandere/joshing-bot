@@ -1,13 +1,14 @@
 from asyncio import sleep
 from datetime import datetime
-from discord import Forbidden, File
+from discord import Forbidden, File, Intents
 from discord.ext import commands
 from json import dump
 from logs.logs import masslist, write
 from pandas import DataFrame
 
 # Establish client user
-client = commands.Bot(command_prefix="josh ")
+intents = Intents.all()
+client = commands.Bot(command_prefix="josh ", intents=intents)
 
 # i hate rewriting this every time
 async def typing(ctx, x):

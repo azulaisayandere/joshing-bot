@@ -1,5 +1,6 @@
-__pycache/
+__pycache__/
 bot_cmds/__pycache__
 logs/__pycache__
 chat/__pycache__
 config.py
+user_log.json
